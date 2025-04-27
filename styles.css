@@ -1,0 +1,545 @@
+/* Import Font (Opsional, ganti jika perlu) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Variabel Warna Tema */
+:root {
+    /* Tema Gelap (Default) */
+    --bg-color-dark: #0a0f1f; /* Biru sangat gelap */
+    --sidebar-bg-dark: rgba(16, 24, 48, 0.355); /* Biru gelap transparan */
+    --chat-bg-dark: rgba(10, 15, 31, 0);
+    --input-bg-dark: rgba(25, 35, 60, 0.051);
+    --bubble-user-bg-dark: rgba(0, 100, 200, 0.5); /* Biru terang transparan */
+    --bubble-ai-bg-dark: rgba(40, 50, 80, 0.6); /* Biru keabu-abuan transparan */
+    --text-color-dark: #e0e0ff; /* Putih kebiruan */
+    --text-secondary-dark: #a0a0cc;
+    --primary-glow-dark: rgba(60, 130, 255, 0.6); /* Biru terang untuk glow */
+    --secondary-glow-dark: rgba(100, 180, 255, 0.4);
+    --border-color-dark: rgba(60, 130, 255, 0.2);
+    --scroll-thumb-dark: rgba(60, 130, 255, 0.4);
+    --scroll-track-dark: rgba(16, 24, 48, 0.5);
+    --logo-color-dark: #6495ED; /* Cornflower blue */
+
+    /* Tema Terang */
+    --bg-color-light: #f0f4ff; /* Putih kebiruan sangat terang */
+    --sidebar-bg-light: rgba(220, 230, 255, 0.7); /* Biru sangat pucat transparan */
+    --chat-bg-light: rgba(240, 244, 255, 0);
+    --input-bg-light: rgba(210, 220, 250, 0);
+    --bubble-user-bg-light: rgba(100, 150, 255, 0.7); /* Biru lebih solid */
+    --bubble-ai-bg-light: rgba(200, 210, 230, 0.7); /* Abu-abu kebiruan terang */
+    --text-color-light: #1c2a4e; /* Biru gelap untuk teks */
+    --text-secondary-light: #4a587e;
+    --primary-glow-light: rgba(0, 80, 200, 0.4);
+    --secondary-glow-light: rgba(80, 140, 220, 0.3);
+    --border-color-light: rgba(0, 80, 200, 0.2);
+    --scroll-thumb-light: rgba(0, 80, 200, 0.5);
+    --scroll-track-light: rgba(220, 230, 255, 0.5);
+    --logo-color-light: #2a52be; /* Biru lebih gelap */
+
+    /* Variabel yang digunakan */
+    --bg-color: var(--bg-color-dark);
+    --sidebar-bg: var(--sidebar-bg-dark);
+    --chat-bg: var(--chat-bg-dark);
+    --input-bg: var(--input-bg-dark);
+    --bubble-user-bg: var(--bubble-user-bg-dark);
+    --bubble-ai-bg: var(--bubble-ai-bg-dark);
+    --text-color: var(--text-color-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --primary-glow: var(--primary-glow-dark);
+    --secondary-glow: var(--secondary-glow-dark);
+    --border-color: var(--border-color-dark);
+    --scroll-thumb: var(--scroll-thumb-dark);
+    --scroll-track: var(--scroll-track-dark);
+    --logo-color: var(--logo-color-dark);
+
+    /* Animasi & Transisi */
+    --transition-speed: 0.3s;
+    --transition-timing: ease-in-out;
+}
+
+/* Global Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px; /* Base font size */
+    /* Optional: Mencegah scroll di level HTML jika diperlukan */
+    /* overflow-x: hidden; */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    /* Hapus overflow: hidden; yang lama jika ada */
+    /* overflow: hidden; */
+
+    /* Cegah scroll vertikal di body (chat history punya scroll sendiri) */
+    overflow-y: hidden;
+    /* ===== FIX: Cegah scroll horizontal di body secara paksa ===== */
+    overflow-x: hidden;
+    /* ============================================================ */
+
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                color var(--transition-speed) var(--transition-timing);
+    height: 100vh; /* Pastikan body memenuhi tinggi viewport */
+    width: 100vw;  /* Pastikan body memenuhi lebar viewport */
+    /* Tambahkan position relative jika perlu positioning absolut di dalamnya */
+    position: relative;
+}
+
+/* Tema Terang */
+body.light-theme {
+    --bg-color: var(--bg-color-light);
+    --sidebar-bg: var(--sidebar-bg-light);
+    --chat-bg: var(--chat-bg-light);
+    --input-bg: var(--input-bg-light);
+    --bubble-user-bg: var(--bubble-user-bg-light);
+    --bubble-ai-bg: var(--bubble-ai-bg-light);
+    --text-color: var(--text-color-light);
+    --text-secondary: var(--text-secondary-light);
+    --primary-glow: var(--primary-glow-light);
+    --secondary-glow: var(--secondary-glow-light);
+    --border-color: var(--border-color-light);
+    --scroll-thumb: var(--scroll-thumb-light);
+    --scroll-track: var(--scroll-track-light);
+    --logo-color: var(--logo-color-light);
+}
+
+/* Container Partikel */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Di belakang semua konten */
+}
+
+/* Layout Utama */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: relative; /* Agar elemen di dalamnya bisa diposisikan relatif */
+    z-index: 1; /* Di atas partikel */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    backdrop-filter: blur(10px); /* Efek glass/transparan */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border-right: 1px solid var(--border-color);
+    box-shadow: 2px 0 15px -5px var(--primary-glow); /* Edge glow */
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing);
+    flex-shrink: 0; /* Agar sidebar tidak mengecil */
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-left: 5px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--logo-color);
+    margin-right: 10px;
+    text-shadow: 0 0 8px var(--secondary-glow);
+    transition: color var(--transition-speed) var(--transition-timing),
+                text-shadow var(--transition-speed) var(--transition-timing);
+}
+
+.ai-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+.sidebar-nav {
+    flex-grow: 1; /* Mengisi ruang kosong */
+    margin-top: 20px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: 15px;
+}
+
+.sidebar-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: block;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: color var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing),
+                transform 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+    color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.026);
+    transform: translateX(5px);
+    text-shadow: 0 0 5px var(--secondary-glow);
+}
+
+body.light-theme .sidebar-nav a:hover {
+     background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+.sidebar-controls {
+    margin-top: auto; /* Mendorong ke bawah */
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+     transition: border-color var(--transition-speed) var(--transition-timing);
+}
+
+#theme-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing),
+                transform 0.2s ease;
+}
+
+#theme-toggle:hover {
+    color: var(--text-color);
+    border-color: var(--primary-glow);
+    box-shadow: 0 0 8px var(--primary-glow);
+    transform: scale(1.1);
+}
+
+#theme-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+body.light-theme #theme-icon-sun { display: none; }
+body:not(.light-theme) #theme-icon-moon { display: none; }
+
+.sidebar-footer {
+    margin-top: 15px; /* Jarak dari tombol tema */
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+     transition: color var(--transition-speed) var(--transition-timing);
+}
+
+/* Area Chat */
+.chat-container {
+    flex-grow: 1; /* Mengambil sisa ruang */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Pastikan mengisi tinggi viewport */
+    background-color: var(--chat-bg);
+    backdrop-filter: blur(5px); /* Sedikit blur berbeda dari sidebar */
+    -webkit-backdrop-filter: blur(5px);
+    transition: background-color var(--transition-speed) var(--transition-timing);
+    /* Penting untuk flex item: Mencegahnya membesar melebihi ruang flex */
+    min-width: 0;
+    /* Mencegah overflow internal di container chat secara keseluruhan */
+    overflow: hidden;
+}
+
+
+.chat-header {
+    padding: 15px 25px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--sidebar-bg); /* Sama seperti sidebar untuk konsistensi */
+    box-shadow: 0 2px 10px -5px var(--primary-glow); /* Glow di bawah header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10; /* Di atas chat history saat scroll */
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+.chat-header h1 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+.header-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--logo-color);
+    text-shadow: 0 0 6px var(--secondary-glow);
+     transition: color var(--transition-speed) var(--transition-timing),
+                 text-shadow var(--transition-speed) var(--transition-timing);
+}
+
+.chat-history {
+    flex-grow: 1;
+    overflow-y: auto; /* Scroll vertikal jika konten meluap buat yang gatau*/
+    overflow-x: hidden;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Jarak antar bubble */
+}
+
+/* Custom Scrollbar */
+.chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+    background: var(--scroll-track);
+    border-radius: 4px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb);
+    border-radius: 4px;
+    border: 2px solid var(--scroll-track); /* Memberi padding visual */
+     transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-glow);
+}
+
+/* Chat Bubbles */
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message {
+    display: flex;
+    /* Maksimum lebar container bubble adalah 75% dari lebar chat history */
+    max-width: 75%;
+    opacity: 0;
+    animation: fadeInSlideUp 0.4s ease-out forwards;
+    animation-delay: 0.1s;
+
+    /* ===== TAMBAHAN PENTING untuk Flexbox ===== */
+    /* Mencegah konten (bubble) memaksa container ini (message)
+       menjadi lebih lebar dari max-width dalam beberapa skenario flexbox */
+    min-width: 0;
+    /* ======================================== */
+}
+
+.message .bubble {
+    padding: 12px 18px;
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+                0 0 10px -2px var(--secondary-glow);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+
+    /* --- FIX UNTUK OVERFLOW (Lebih Agresif) --- */
+    word-wrap: break-word;      /* Fallback */
+    overflow-wrap: break-word;  /* Standard */
+    /* ===== TAMBAHAN: Paksa pemutusan kata di mana saja jika perlu ===== */
+    word-break: break-all;
+    /* =============================================================== */
+    /* ----------------------------------------- */
+
+    white-space: pre-wrap; /* Tetap penting untuk format spasi/baris baru */
+}
+
+.user-message {
+    align-self: flex-end;
+    margin-left: auto;
+    /* Optional: Pastikan max-width berlaku di sini juga (seharusnya sudah dari .message) */
+    /* max-width: 75%; */
+}
+
+.ai-message {
+    align-self: flex-start;
+    margin-right: auto;
+    /* Optional: Pastikan max-width berlaku di sini juga (seharusnya sudah dari .message) */
+    /* max-width: 75%; */
+}
+
+/* Input Area */
+.input-area-container {
+     padding: 15px 25px;
+     border-top: 1px solid var(--border-color);
+     background-color: var(--input-bg);
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     box-shadow: 0 -2px 15px -5px var(--primary-glow); /* Glow di atas input */
+     transition: background-color var(--transition-speed) var(--transition-timing),
+                 border-color var(--transition-speed) var(--transition-timing),
+                 box-shadow var(--transition-speed) var(--transition-timing);
+    z-index: 5; /* Di bawah header tapi di atas chat history */
+}
+
+.typing-indicator {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    padding-left: 5px;
+    font-style: italic;
+    transition: color var(--transition-speed) var(--transition-timing);
+    animation: blinkFade 1.5s infinite ease-in-out;
+}
+
+@keyframes blinkFade {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.input-area {
+    display: flex;
+    align-items: flex-end; /* Align items ke bawah (untuk textarea multi-baris) */
+    gap: 10px;
+}
+
+#user-input {
+    flex-grow: 1;
+    min-height: 44px; /* Tinggi minimum */
+    max-height: 150px; /* Batas tinggi maksimum */
+    padding: 10px 15px;
+    border-radius: 22px; /* Bentuk pil */
+    border: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2); /* Sedikit lebih gelap */
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    resize: none; /* Matikan resize manual */
+    outline: none;
+    transition: border-color var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing),
+                color var(--transition-speed) var(--transition-timing);
+    line-height: 1.4;
+    overflow-y: auto; /* Scroll jika teks banyak */
+}
+
+body.light-theme #user-input {
+     background-color: rgba(255, 255, 255, 0.3);
+}
+
+#user-input:focus {
+    border-color: var(--primary-glow);
+    box-shadow: 0 0 8px -1px var(--primary-glow);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-theme #user-input:focus {
+     background-color: rgba(255, 255, 255, 0.5);
+}
+
+#user-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+     transition: color var(--transition-speed) var(--transition-timing);
+}
+
+#send-button {
+    flex-shrink: 0; /* Tombol tidak mengecil */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--logo-color); /* Warna primary */
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing),
+                transform 0.2s ease;
+    box-shadow: 0 0 10px -2px var(--primary-glow);
+}
+
+#send-button:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px 0px var(--primary-glow);
+    transform: scale(1.05);
+}
+
+#send-button:active {
+    transform: scale(0.98);
+    filter: brightness(0.9);
+}
+
+#send-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsiveness (Contoh sederhana, bisa disesuaikan) */
+@media (max-width: 768px) {
+    .sidebar {
+        /* Mungkin disembunyikan atau dibuat lebih kecil/overlay di mobile */
+        width: 200px;
+    }
+
+    .chat-header h1 {
+        font-size: 1.2rem;
+    }
+     .header-logo {
+        font-size: 1.5rem;
+    }
+
+    .chat-history {
+        padding: 15px;
+    }
+
+     .input-area-container {
+        padding: 10px 15px;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+     #user-input {
+         font-size: 0.9rem;
+         min-height: 40px;
+         padding: 8px 12px;
+     }
+     #send-button {
+         width: 40px;
+         height: 40px;
+     }
+      #send-button svg {
+         width: 18px;
+         height: 18px;
+     }
+}
